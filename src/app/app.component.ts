@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { CubeControlsService } from './services/cube-controls.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,12 +14,14 @@ export class AppComponent {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private controls!: OrbitControls;
+  private cube!: THREE.Mesh;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private _cubeControls:CubeControlsService) {}
 
   ngAfterViewInit(): void {
     this.initThree();
     this.addCube();
+    this.addPlane();
     this.addLight();
     this.animate();
   }
@@ -36,9 +39,19 @@ export class AppComponent {
 
   private addCube(): void {
     const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    this.scene.add(cube);
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+    this.cube = new THREE.Mesh(geometry, material);
+    this.cube.castShadow = true;
+    this.scene.add(this.cube);
+  }
+
+  private addPlane():void{
+    const geometry = new THREE.PlaneGeometry(20,20,32,32)
+    const material = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+    const plane = new THREE.Mesh(geometry, material)
+    plane.receiveShadow = true;
+    this.scene.add(plane);
+
   }
 
   private addLight(): void {
@@ -49,6 +62,17 @@ export class AppComponent {
 
   private animate(): void {
     requestAnimationFrame(() => this.animate());
+    this.cube.position.set(
+      this._cubeControls.x_position!,
+      this._cubeControls.y_position!,
+      this._cubeControls.z_position!
+      );
+    this.cube.rotation.set(
+      this._cubeControls.x_rotation!,
+      this._cubeControls.y_rotation!,
+      this._cubeControls.z_rotation!
+    )
+
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
   }

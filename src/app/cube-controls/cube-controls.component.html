@@ -1,0 +1,66 @@
+<div class="container">
+  <h4>Position</h4>
+  <div class="input_container">
+      <mat-form-field>
+        <mat-label>x position</mat-label>
+        <input
+          type="number"
+          matInput
+          (input)="setTransformAxis($event,'x','position')"
+          step="0.05"
+          [value]="cubePosition.x_position"
+          >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>y position</mat-label>
+        <input
+          type="number"
+          matInput
+          (input)="setTransformAxis($event,'y','position')"
+          step="0.05"
+          [value]="cubePosition.y_position"
+          >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>z position</mat-label>
+        <input
+          type="number"
+          matInput
+          (input)="setTransformAxis($event,'z','position')"
+          step="0.05"
+          [value]="cubePosition.z_position"
+          >
+      </mat-form-field>
+  </div>
+  <h4>rotation</h4>
+  <mat-form-field>
+    <mat-label>X Rotation</mat-label>
+    <input
+      type="number"
+      matInput
+      (input)="setTransformAxis($event,'x','rotation')"
+      step="0.05"
+      [value]="cubePosition.x_rotation"
+      >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Y Rotation</mat-label>
+    <input
+      type="number"
+      matInput
+      (input)="setTransformAxis($event,'y','rotation')"
+      step="0.05"
+      [value]="cubePosition.y_rotation"
+      >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Z Rotation</mat-label>
+    <input
+      type="number"
+      matInput
+      (input)="setTransformAxis($event,'z','rotation')"
+      step="0.05"
+      [value]="cubePosition.z_rotation"
+      >
+  </mat-form-field>
+</div>
